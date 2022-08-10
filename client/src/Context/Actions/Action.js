@@ -13,3 +13,4 @@ export const LoginFailure = (user) =>({
 export const Logout = (user) =>({
     type:"LOGOUT"
 })
+

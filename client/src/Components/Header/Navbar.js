@@ -1,36 +1,38 @@
-import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import {Link} from 'react-router-dom'
-
-const  Navbars = () => {
+import React from "react";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { Context } from "../../Context/Context";
+const Navbars = () => {
+  const { user ,dispatch} = useContext(Context);
+  const navigate = useNavigate()
+  const handleLogout = async() =>{
+    await dispatch({type:"LOGOUT"})
+    navigate('/')
+  }
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-           <Nav.Link>  <Link to="login">Login</Link></Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
+           
+              <Nav.Item><Link to="/" style={{textDecoration:"none",color:'black'}}>Home</Link></Nav.Item>  
+                
+                 
+                 { user ? <Nav.Item><Link onClick={handleLogout} to="/">Logout</Link></Nav.Item> :<Nav.Item><Link to="/login">Login</Link></Nav.Item>}
+               
+           <Nav.Item><Link to="/dashboard">Expense Tracker</Link> </Nav.Item>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
-}
+};
 
 export default Navbars;

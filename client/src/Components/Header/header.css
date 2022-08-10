@@ -1,0 +1,9 @@
+.mainflex{
+    width:  100% !important;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+Link{
+    display: flex;
+}
