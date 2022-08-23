@@ -12,9 +12,8 @@ const ExpensesRoute = require('./Routes/expenses')
 const CatRoute = require('./Routes/Categoriesexpense')
 Connection()
 env.config()
-// app.use(express.urlencoded({extended: true}));
+app.use(cors());
 app.use(express.json());
-// app.use(cors());
 app.use('/auth',authRoute);
 app.use('/users',UsersRoute)
 app.use('/calendars',CalendarRoute)
