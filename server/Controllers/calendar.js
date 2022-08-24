@@ -1,5 +1,5 @@
-const {Calendar} = require("../Models/calendar")
 
+const Calendar = require('../Models/calendar')
 const addCaledar = async(req,res,next)=>{
     try{
         const addCaledar  = new Calendar({
@@ -11,6 +11,7 @@ const addCaledar = async(req,res,next)=>{
 
     }catch(error){
         next(error)
+        console.log(error)
 
     }
 

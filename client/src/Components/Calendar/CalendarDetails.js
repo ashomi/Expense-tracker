@@ -9,7 +9,7 @@ const CalendarDetails = () => {
     const [emp, setEmp] = useState({})
     useEffect(() => {
         const fetchEmp = async () => {
-            const res = await axios.get('/calendar/' + path)
+            const res = await axios.get('/calendars/' + path)
             console.log(res)
             setEmp(res.data)
         }

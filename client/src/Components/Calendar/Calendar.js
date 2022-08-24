@@ -15,9 +15,9 @@ const Calendar = () => {
     const [show, setShow] = useState(false);
     const [calendar, setcalendar] = useState([])
     const [Calendar,setCalendar] = useState({
-        calendarname:""
+        calendar:""
     })
-    const url = "calendars/addcalendars";
+    const url = "/calendars/addcalendars";
     const url1 = "/calendars";
      //handle input
      let name,value;
@@ -31,27 +31,30 @@ const Calendar = () => {
     const postCalendar = async () =>{
         try{
                const post = await axios.post(url,Calendar);
+               console.log(post)
                post && window.location.replace('/calendar')
         }catch(error){
             console.log(error)
         }
     }
     
-   
-    
-    //get all calendars
     const getCalendars = async () => {
         try {
             const response = await axios.get(url1);
-            const data = response.data;
+            const data = response.data.getcal;
             setcalendar(data);
-            console.log(data)
+            console.log("data",data)
            
         } catch (error) { console.log(error) }
     }
+    
+   
 
     useEffect(() => {
-        getCalendars();
+         //get all calendars
+       
+      getCalendars();
+      
         
 
     },[])
@@ -65,9 +68,9 @@ const Calendar = () => {
         { field: 'day', headerName: 'Day', width: 280 },
         {field: "time",headerName:"Time", width:280}
     ]
-   
-   const rows = calendar.map(calendar=>({id:calendar.sr_no,calendarname:calendar.calendarname,createdOn:moment(calendar.createdAt).format("D/MM/YYYY"),day:moment(calendar.createdAt).format("dddd"),time:moment(calendar.createdAt).format('LT')}))
-
+    //    const rows = calendar.map(c=>{calendarname:c.calendar;})
+//    const rows = calendar.map(c=>({id:c.sr_no,calendarname:c.calendarname,createdOn:moment(c.createdAt).format("D/MM/YYYY"),day:moment(c.createdAt).format("dddd"),time:moment(c.createdAt).format('LT')}))
+    
     return (
         <>
             <div className='content-wrapper' style={{ backgroundColor: '#f7f7f7' }}>
@@ -100,7 +103,12 @@ const Calendar = () => {
                             <div className="card-body">
                                 <div className='table-responsive'>
                                     <div style={{ height: 400, width: '100%' }}>
-                                        <DataGrid columns={columns} rows={rows} />
+                                        {/* <DataGrid columns={columns} rows={rows} /> */}
+                                        {calendar.map((d,i)=>{
+                                            return(<div key={i}>
+                                                <h6 >{d.calendar}</h6>
+                                            </div>)
+                                        })}
                                     </div>
                                 </div>
                             </div>
@@ -126,7 +134,7 @@ const Calendar = () => {
                         <Form type="submit" onSubmit={postCalendar}>
                             <Form.Group>
                                 <Form.Label><span> Calendar Name</span></Form.Label>
-                                <Form.Control type='text' onChange={handleInput} name="calendarname"></Form.Control>
+                                <Form.Control type='text' onChange={handleInput} name="calendar"></Form.Control>
                                 <div style={{ display: "flex", justifyContent: "center" }}>
                                     <Button type="submit" className='btn mt-4' >
                                         Add Calendar
